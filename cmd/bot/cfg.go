@@ -1,8 +1,6 @@
 package main
 
 import (
-	"flag"
-	"os"
 	"time"
 
 	"github.com/BurntSushi/toml"
@@ -13,45 +11,39 @@ type (
 		time.Duration
 	}
 
-	Config struct {
-		TgAPI struct {
-			Token string `toml:"token"`
-		} `toml:"tg_api"`
-		NotionAPI struct {
-			Token          string    `toml:"token"`
-			Timeout        *Duration `toml:"timeout"`
-			Version        string    `toml:"version"`
-			DbId           string    `toml:"db_id"`
-			SearchUrl      string    `toml:"search_url"`
-			UpdateInterval *Duration `toml:"update_interval"`
-		} `toml:"notion_api"`
-		Path string
+	CfgWarehouse struct {
+		UpdateInterval *Duration `toml:"update_interval"`
+	}
+
+	CfgTelegram struct {
+		Token string `toml:"token"`
+	}
+
+	CfgNotionAPI struct {
+		Token     string    `toml:"token"`
+		Timeout   *Duration `toml:"timeout"`
+		Version   string    `toml:"version"`
+		DbId      string    `toml:"db_id"`
+		SearchUrl string    `toml:"search_url"`
+	}
+
+	CfgApp struct {
+		TgAPI     CfgTelegram  `toml:"tg_api"`
+		Wh        CfgWarehouse `toml:"warehouse"`
+		NotionAPI CfgNotionAPI `toml:"notion_api"`
+		Path      string
 	}
 )
 
-func (d *Duration) UnmarshalText(text []byte) error {
-	var err error
+func (d *Duration) UnmarshalText(text []byte) (err error) {
 	d.Duration, err = time.ParseDuration(string(text))
-	return err
+	return
 }
 
-func ConfigInit() *Config {
-	fCfgPath := flag.String("c", "conf.toml", "path to conf file")
-	flag.Parse()
-
-	conf := new(Config)
-	file, err := os.Open(*fCfgPath)
-	eh(err)
-
-	defer func() {
-		if file == nil {
-			return
-		}
-		eh(file.Close())
-	}()
-
-	_, err = toml.DecodeFile(*fCfgPath, &conf)
-	eh(err)
-	conf.Path = *fCfgPath
-	return conf
+func LoadConfig(fileName string) (conf *CfgApp, err error) {
+	if _, err = toml.DecodeFile(fileName, &conf); err != nil {
+		return nil, err
+	}
+	conf.Path = fileName
+	return
 }
