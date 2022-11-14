@@ -1,3 +1,5 @@
+[![Go](https://github.com/sir-go/bot-notion-aidkit/actions/workflows/go.yml/badge.svg)](https://github.com/sir-go/bot-notion-aidkit/actions/workflows/go.yml)
+
 # Telegram bot for search the medicine in my home first aid kit
 > https://t.me/mserg_apteka_bot
 
