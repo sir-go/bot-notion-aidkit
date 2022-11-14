@@ -9,4 +9,4 @@
     search_url = 'https://api.notion.com/v1/search'
 
 [warehouse]
-update_interval = '45m'
+    update_interval = '45m'

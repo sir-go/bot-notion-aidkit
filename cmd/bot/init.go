@@ -22,7 +22,7 @@ func initInterrupt() {
 }
 
 func initLogger() {
-	zlog.Logger = zlog.With().Caller().Logger()
+	//zlog.Logger = zlog.With().Caller().Logger()
 	zlog.Logger = zlog.Output(zerolog.ConsoleWriter{
 		Out:        os.Stdout,
 		TimeFormat: time.RFC3339,
