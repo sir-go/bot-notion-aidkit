@@ -1,19 +1,17 @@
-### Telegram bot for search the medicine in my home first aid kit
-
+# Telegram bot for search the medicine in my home first aid kit
 > https://t.me/mserg_apteka_bot
 
-___
-### How it works
+I developed this project while I had COVID and I was doing an inventory of my home first-aid kit.
 
+## How it works
 The bot listens to users' requests and searches records via Notion API in the database. 
 If something is found, a user gets the answer including a photo of the medicine and tags, and location info.
 
 The data updates from the database periodically or by the command `/update`.
 
 The database easily administrates at the Notion service.
-___
-### Configuration file
 
+## Configuration file
 Option `-c` sets the configuration file path (default `./conf.toml`).
 
 ```toml
@@ -26,20 +24,26 @@ Option `-c` sets the configuration file path (default `./conf.toml`).
     version = '2021-08-16'                          # API version
     db_id = '...'                                   # notion database ID
     search_url = 'https://api.notion.com/v1/search' # seach API URL
-    update_interval = '45m'                         # autoupdate data time interval
 
+[warehouse]
+    update_interval = '45m'                         # autoupdate data time interval
 ```
-___
-### Build & run
+## Docker
+```bash
+docker build -t bot .
+docker run -v ${PWD}/conf.toml:/conf.toml --rm -it bot:latest
+```
+
+## Build & run
 ```bash
 go mod download
+go test ./cmd/bot
 go build -o bot ./cmd/bot
 ```
-___
-### Screencast
 
-#### DB in the Notion table
+## Screencast
+### DB in the Notion table
 ![](notion.png)
 
-#### Bot interaction
+### Bot interaction
 ![](sc.gif)

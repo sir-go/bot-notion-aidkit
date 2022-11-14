@@ -1,0 +1,12 @@
+[tg_api]
+    token = '-change-it-' # BotFather helps
+
+[notion_api]
+    token = '-change-it-' # notion integrations
+    timeout = '10s'
+    version = '2021-08-16'
+    db_id = '-change-it-' # ID of DB in notion
+    search_url = 'https://api.notion.com/v1/search'
+
+[warehouse]
+    update_interval = '45m'

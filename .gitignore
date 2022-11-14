@@ -34,3 +34,4 @@ fabric.properties
 ndb
 conf.toml
 bin/
+.local
