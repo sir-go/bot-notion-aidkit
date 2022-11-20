@@ -26,3 +26,14 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+
+  go_sec:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./...
